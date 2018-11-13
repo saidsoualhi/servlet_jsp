@@ -5,6 +5,11 @@
     <param-name>DATABASE_URL</param-name>
     <param-value>jdbc:mysql://localhost:3306/hello</param-value>
   </context-param>
+  
+  <session-config>
+  	<session-timeout>1</session-timeout>
+  </session-config>
+  
   <welcome-file-list>
     <welcome-file>login</welcome-file>
   </welcome-file-list>

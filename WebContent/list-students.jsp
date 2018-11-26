@@ -1,4 +1,4 @@
-<%@ page import="java.util.*, mvc.demo.servlet.*" %>
+<%@ page import="java.util.*, com.jsp.servlet.cours.*" %>
 <!DOCTYPE html>
 <html>
 
@@ -13,40 +13,39 @@
 
 <body>
 
-<!-- 	<div id="wrapper"> -->
-<!-- 		<div id="header"> -->
-<!-- 			<h2>FooBar University</h2> -->
-<!-- 		</div> -->
-<!-- 	</div> -->
+	<div id="wrapper">
+		<div id="header">
+			<h2>FooBar University</h2>
+		</div>
+	</div>
 
-<!-- 	<div id="container"> -->
+	<div id="container">
 	
-<!-- 		<div id="content"> -->
+		<div id="content">
 		
-<!-- 			<table> -->
+			<table>
 			
-<!-- 				<tr> -->
-<!-- 					<th>First Name</th> -->
-<!-- 					<th>Last Name</th> -->
-<!-- 					<th>Email</th> -->
-<!-- 				</tr> -->
+				<tr>
+					<th>First Name</th>
+					<th>Last Name</th>
+					<th>Email</th>
+				</tr>
 				
-<%-- 				<% for (Student tempStudent : theStudents) { %> --%>
+				<% for (Student tempStudent : theStudents) { %>
 				
-<!-- 					<tr> -->
-<%-- 						<td> <%= tempStudent.getFirstName() %> </td> --%>
-<%-- 						<td> <%= tempStudent.getLastName() %> </td> --%>
-<%-- 						<td> <%= tempStudent.getemail() %> </td> --%>
-<!-- 					</tr> -->
+					<tr>
+						<td> <%= tempStudent.getFirstName() %> </td>
+						<td> <%= tempStudent.getLastName() %> </td>
+						<td> <%= tempStudent.getemail() %> </td>
+					</tr>
 				
-<%-- 				<% } %> --%>
+				<% } %>
 				
-<!-- 			</table> -->
+			</table>
 		
-<!-- 		</div> -->
+		</div>
 	
-<!-- 	</div> -->
-<%= theStudents %>
+	</div>
 </body>
 
 

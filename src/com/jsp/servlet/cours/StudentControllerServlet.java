@@ -19,7 +19,7 @@ import javax.sql.DataSource;
 public class StudentControllerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	private StudentDataUtil studentDbUtil;
+	private StudentDbUtil studentDbUtil;
 	
 	@Resource(name="jdbc/web_student_tracker")
 	private DataSource dataSource;
@@ -30,7 +30,7 @@ public class StudentControllerServlet extends HttpServlet {
 		
 		// create our student db util ... and pass in the conn pool / datasource
 		try {
-			studentDbUtil = new StudentDataUtil(dataSource);
+			studentDbUtil = new StudentDbUtil(dataSource);
 		}
 		catch (Exception exc) {
 			throw new ServletException(exc);
@@ -41,12 +41,50 @@ public class StudentControllerServlet extends HttpServlet {
 
 		// list the students ... in mvc fashion
 		try {
+			// read the "commandé parameter
+			String theCommand = request.getParameter("command");
+			
+			//if the command is missing, then default to listing students
+			if (theCommand == null) {
+				theCommand = "LIST";
+			}
+			
+			// route to the appropriate method
+			switch (theCommand) {
+			case "LIST":
+				listStudents(request, response);
+				break;
+			case "ADD":
+				addStudent(request, response);
+				break;
+			default:
+				listStudents(request, response);
+			}
+			
+			
 			listStudents(request, response);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}		
 		
+	}
+
+	private void addStudent(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		// read student info from "form" data
+		String firstName = request.getParameter("firstName");
+		String lastName = request.getParameter("lastName");
+		String email = request.getParameter("email");
+		
+		// create a new student object
+		Student theNewStudent = new Student(firstName, lastName, email);
+		
+		// add the new student to the database
+		studentDbUtil.addStudent(theNewStudent);
+		
+		// send back to main page (the student list)
+		listStudents(request, response);
 	}
 
 	private void listStudents(HttpServletRequest request, HttpServletResponse response) 

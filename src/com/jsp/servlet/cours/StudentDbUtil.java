@@ -3,17 +3,18 @@ package com.jsp.servlet.cours;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.sql.DataSource;
 
-public class StudentDataUtil {
+public class StudentDbUtil {
 
 	private DataSource dataSource;
 
-	public StudentDataUtil(DataSource theDataSource) {
+	public StudentDbUtil(DataSource theDataSource) {
 		dataSource = theDataSource;
 	}
 	
@@ -79,6 +80,36 @@ public class StudentDataUtil {
 		catch (Exception exc) {
 			exc.printStackTrace();
 		}
+	}
+
+	public void addStudent(Student theNewStudent) throws SQLException {
+		// 
+		Connection myConn = null;
+		PreparedStatement myStmt = null;
+		
+		try {
+			// get a connection
+			myConn = dataSource.getConnection();
+			
+			// create sql statement
+			String sql = "insert into student (first_name, last_name, email) values ( ?,?,?)";
+			
+			// execute query
+			myStmt = myConn.prepareStatement(sql);
+			
+			// set the param values for the student
+			myStmt.setString(1, theNewStudent.getFirstName());
+			myStmt.setString(2, theNewStudent.getLastName());
+			myStmt.setString(3, theNewStudent.getemail());
+			
+			myStmt.execute();
+			
+			
+		}
+		finally {
+			// close JDBC objects
+			close(myConn, myStmt, null);
+		}		
 	}
 
 }

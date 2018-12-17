@@ -33,15 +33,29 @@ tr:nth-child(odd) {background: #BBBBBB}
 #container h3 {color: #000;}
 #container #content {margin-top: 20px;}
 
-.add-student-button {
+.update-button,
+.add-student_btn,
+.save_btn,
+.delete-button {
 	border: 1px solid #666; 
 	border-radius: 5px; 
-	padding: 4px; 
 	font-size: 12px;
 	font-weight: bold;
 	width: 120px; 
-	padding: 5px 10px; 
-	
+	padding: 0; 
 	margin-bottom: 15px;
-	background: #cccccc;
+	background: #008000;
+	color: #fff;
+}
+.delete-button {
+	background: #ab2929;
+}
+button a {
+	padding: 4px;
+	display: block;
+	cursor: pointer
+}
+a {
+	text-decoration: none;
+	color: #fff
 }

@@ -57,16 +57,70 @@ public class StudentControllerServlet extends HttpServlet {
 			case "ADD":
 				addStudent(request, response);
 				break;
+			case "LOAD":
+				loadStudent(request, response);
+				break;
+			case "UPDATE":
+				updateStudent(request, response);
+				break;
+			case "DELETE":
+				deleteStudent(request, response);
+				break;
 			default:
 				listStudents(request, response);
 			}
 			
-			
-			listStudents(request, response);
+//			listStudents(request, response);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}		
+		
+	}
+
+	private void deleteStudent(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		// read and get student info from "form" data
+				int idStudent = Integer.parseInt((request.getParameter("studentId")));
+
+
+				// faire la mise a jour sur la base de donnée
+				studentDbUtil.deleteStudent(idStudent);
+				
+				// retourne la liste des etudiants a la page concerné
+				listStudents(request, response);
+	}
+
+	private void updateStudent(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		// read and get student info from "form" data
+		int id = Integer.parseInt(request.getParameter("studentId"));
+		String firstName = request.getParameter("firstName");
+		String lastName = request.getParameter("lastName");
+		String email = request.getParameter("email");
+		
+		// creation d'un nouveau etudiant
+		Student theStudent = new Student(id, firstName, lastName, email);
+		
+		// faire la mise a jour sur la base de donnée
+		studentDbUtil.updateStudent(theStudent);
+		
+		// retourne la liste des etudiants a la page concerné
+		listStudents(request, response);
+		
+	}
+
+	private void loadStudent(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	// read student id from "form" data
+		String studentId = request.getParameter("studentId");
+		
+		// get student from database (db util)
+		Student studentToUpdate = studentDbUtil.getStudent(studentId);
+		
+		// place student in the request attribute
+		request.setAttribute("THE_STUDENT", studentToUpdate);
+		
+		// send to jsp page: "update-student-form.jsp"
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/update-student-form.jsp");
+		dispatcher.forward(request, response);
 		
 	}
 

@@ -30,15 +30,32 @@
 					<th>Actions</th>
 				</tr>
 				
-				<input type="button" value="Add student" onclick="window.location.href='add-student-form.jsp'; return false;" class="add-student_btn">
+				<button type="button" class="add-student_btn">
+					<a onclick="window.location.href='add-student-form.jsp'; return false;" >Add student</a>
+				</button>
 				<c:forEach var="tempStudent" items="${STUDENT_LIST}">
-					
+				
+					<!-- set up a link for each student -->
+					<c:url var="tempLink" value="StudentControllerServlet">
+						<c:param name="command" value="LOAD" />
+						<c:param name="studentId" value="${tempStudent.id}" />
+					</c:url>
+					<!-- set up a link for delete student -->
+					<c:url var="deleteLink" value="StudentControllerServlet">
+						<c:param name="command" value="DELETE" />
+						<c:param name="studentId" value="${tempStudent.id}" />
+					</c:url>
 					<tr>
 						<td> ${tempStudent.firstName} </td>
 						<td> ${tempStudent.lastName} </td>
 						<td> ${tempStudent.email} </td>
 						<td>
-							<button  name="updateStudent">update</button>
+							<button  name="updateStudent" class="update-button">
+							
+							<a href="${tempLink}">update</a></button>
+							<br>
+							<button  name="deleteStudent" class="delete-button">
+							<a href="${deleteLink}" onclick="(!(confirm('Are you sure ?'))) return false">delete</a></button>
 						</td>
 					</tr>
 				
